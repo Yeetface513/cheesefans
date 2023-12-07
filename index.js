@@ -2,6 +2,6 @@ function chippy(){
   var fortnite="the griddy";
   alert(fortnite);
 }
-function back(){
+document.getElementById("go-back").addEventListener("click", () => {
   history.back();
-}
+});
