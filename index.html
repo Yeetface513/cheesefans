@@ -57,6 +57,54 @@
       <br><br>
       <button onclick="chippy()">Do it.</button><br><br><br>
       <audio src="/vine_boom.mp3"></audio>
+      <button data-playing="false" role="switch" aria-checked="false" class="hi" style="background: transparent; border: 0; z-index: 2; position: fixed; width: 99.9%; height: 99.9%; top: 0; left: 0;"></button>
+    <script>
+        // get the audio element
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+        const audioCtx = new AudioContext();
+        const audioElement = document.querySelector("audio");
+
+        // pass it into the audio context
+       
+        const track = audioCtx.createMediaElementSource(audioElement);
+
+        track.connect(audioCtx.destination);
+
+        const playButton = document.querySelector(".hi");
+
+            playButton.addEventListener(
+                "click",
+                () => {
+                    // console.log("button pressed");
+                    // Check if context is in suspended state (autoplay policy)
+                    if (audioCtx.state === "suspended") {
+                        audioCtx.resume();
+                    }
+
+                    // Play or pause track depending on state
+                    if (playButton.dataset.playing === "false") {
+                        audioElement.play();
+                        playButton.dataset.playing = "true";
+                    } else if (playButton.dataset.playing === "true") {
+                        audioElement.pause();
+                        playButton.dataset.playing = "false";
+                    }
+                },
+                false,
+            );
+            audioElement.addEventListener(
+                    "ended",
+                    () => {
+                        playButton.dataset.playing = "false";
+                    },
+                    false,
+                );
+
+        const gainNode = audioCtx.createGain();
+        track.connect(gainNode).connect(audioCtx.destination);
+        gainNode.gain.value = 2;
+    </script>
       
   </body>
 </html>
