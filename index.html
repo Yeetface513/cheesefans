@@ -19,8 +19,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#000000">
   </head>
-  <body>
-    <script src="/index.js"></script>
+  <body style="position: relative; z-index: -2;">
+    
+    <button data-playing="false" aria-checked="false" class="hi" style="background: transparent; border: 0; position: fixed; width: 99.9%; height: 99.9%; top: 0; left: 0;"></button>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/index.html">Home</a>
@@ -55,15 +56,18 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"></script>
       <br><br>
-      <button onclick="chippy()">Do it.</button><br><br><br>
-      <audio src="/vine_boom.mp3"></audio>
-      <button data-playing="false" role="switch" aria-checked="false" class="hi" style="background: transparent; border: 0; z-index: 0; position: fixed; width: 99.9%; height: 99.9%; top: 0; left: 0;"></button>
+      <button style="z-index: 2; position: relative;" onclick="chippy()">Do it.</button><br><br><br>
+      <audio src="/cheese.mp3"></audio>
+      
+      
     <script>
+      // credit to downloadfirefox for this
         // get the audio element
         const AudioContext = window.AudioContext || window.webkitAudioContext;
 
         const audioCtx = new AudioContext();
         const audioElement = document.querySelector("audio");
+        
 
         // pass it into the audio context
        
@@ -76,6 +80,7 @@
             playButton.addEventListener(
                 "click",
                 () => {
+                  audioElement.currentTime = 0;
                     // console.log("button pressed");
                     // Check if context is in suspended state (autoplay policy)
                     if (audioCtx.state === "suspended") {
@@ -83,13 +88,8 @@
                     }
 
                     // Play or pause track depending on state
-                    if (playButton.dataset.playing === "false") {
-                        audioElement.play();
-                        playButton.dataset.playing = "true";
-                    } else if (playButton.dataset.playing === "true") {
-                        audioElement.pause();
-                        playButton.dataset.playing = "false";
-                    }
+
+                    audioElement.play();
                 },
                 false,
             );
@@ -105,6 +105,6 @@
         track.connect(gainNode).connect(audioCtx.destination);
         gainNode.gain.value = 2;
     </script>
-      
+      <script src="/index.js"></script>
   </body>
 </html>
