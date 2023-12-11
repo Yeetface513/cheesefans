@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 #beans{
     font-family: 'Rubik', sans-serif;
-    padding: 20px;
+    padding: 5px;
 }
 #skibidi{
     font-family: 'Rubik', sans-serif, bold;
-     padding: 20px;
+     padding: 10px;
      font-size: larger;
 }
