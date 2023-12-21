@@ -43,5 +43,52 @@
     <img src="/quote.svg" class="img-thumbnail" alt="quotation marks" width="100" height="100">
     <p id="skibidi">I think brie is one of the best cheese out there <br>-me</p>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <audio src="/cheese.mp3"></audio>
+      
+      
+    <script>
+        // get the audio element
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+        const audioCtx = new AudioContext();
+        const audioElement = document.querySelector("audio");
+        
+
+        // pass it into the audio context
+       
+        const track = audioCtx.createMediaElementSource(audioElement);
+
+        track.connect(audioCtx.destination);
+
+        const playButton = document.querySelector(".hi");
+
+            playButton.addEventListener(
+                "click",
+                () => {
+                  audioElement.currentTime = 0;
+                    // console.log("button pressed");
+                    // Check if context is in suspended state (autoplay policy)
+                    if (audioCtx.state === "suspended") {
+                        audioCtx.resume();
+                    }
+
+                    // Play or pause track depending on state
+
+                    audioElement.play();
+                },
+                false,
+            );
+            audioElement.addEventListener(
+                    "ended",
+                    () => {
+                        playButton.dataset.playing = "false";
+                    },
+                    false,
+                );
+
+        const gainNode = audioCtx.createGain();
+        track.connect(gainNode).connect(audioCtx.destination);
+        gainNode.gain.value = 2;
+    </script>
   </body>
 </html>
